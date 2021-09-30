@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block left_content %}
+			<!-- List-Group Panel -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title"> Categories</h1>
+		</div>
+		<ul class="list-group">
+		{% for category in categories %}
+		 <li class="list-group-item">
+		  <span><a href="#" class="list-group-item">{{ category.name }}</a></span>
+		 </li>
+		{% endfor%}
+		</ul>
+	</div>
+{% endblock left_content %}
+
+{% block center_content %}
+  
+	<!-- Articles -->
+	<div class="row">
+		<article class="col-xs-12">
+			<header class="entry-header">
+				<h2 class="entry-title">{{ post.title}}</h2>
+				<div class="entry-meta">
+					<span class="byline"><i class="fa fa-user"></i><span class="author vcard"><a class="url fn n" href="http://xiaorui.cc/archives/author/rfyiamcool">{{ post.category.name }}</a></span></span> &nbsp; | &nbsp; <span class="posted-on"><i class="fa fa-calendar"></i><a href="#" rel="bookmark">
+					<time class="entry-date published" datetime="{{post.timestamp}}">{{ post.timestamp | date:"Y年m月d日"}}</time></a></span>
+					&nbsp; | &nbsp;
+					<span class="comments-link">
+				    	<a href="#">{{ comments | length}} Comments</a>			
+					</span>
+				</div>
+	        </header>
+			<div class="body">
+				{% autoescape off %}
+			  		{{ post.body }}
+				{% endautoescape %}
+			</div>
+		</article>
+	</div>
+	<div class="col-md-offset-0">
+	</div>
+{% endblock center_content %}
