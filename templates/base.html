@@ -29,10 +29,24 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             locale: "zh",
+            eventTextColor:"red",
         });
         calendar.render();
         });
     </script>
+    <style>
+    .bg1 {
+          background-image: url({% static 'background/sky1.jpg' %});
+          -moz-background-size:100% 100%; 
+          background-size:100% 100%;
+     }
+     .fc-col-header-cell-cushion {
+         color:black;
+     }
+     .fc-daygrid-day-number{
+         color:black;
+     }
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,7 +70,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> Logo</a>
             </div>
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbar">
@@ -97,7 +110,7 @@
         <!-- /.container -->
     </nav>
 
-<div class="container-fluid">
+<div class="container-fluid bg1">
     <!-- Left Column -->
     <div class="col-sm-3">
     {% block left_content %}{% endblock left_content %}
