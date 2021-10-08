@@ -9,7 +9,7 @@
 		<ul class="list-group">
 		{% for category in categories %}
 		 <li class="list-group-item">
-		  <span><a href="#" class="list-group-item">{{ category.name }}</a></span>
+		  <span><a href="{% url 'list_post' 1 category.id   %}" class="list-group-item">{{ category.name }}</a></span>
 		 </li>
 		{% endfor%}
 		</ul>
@@ -23,8 +23,12 @@
 	<div class="row">
 		<article class="col-xs-12">
 			<h2>{{ post.title }}</h2>
-			<p>Seamlessly visualize quality intellectual capital without superior collaboration and idea-sharing. Holistically pontificate installed base portals after maintainable products. Proactively envisioned multimedia based expertise and cross-media growth strategies.</p>
-			<p><button class="btn btn-default">Read More</button></p>
+			<p>
+			{% autoescape off %}
+			  	{{ post.body |striptags | truncatechars:100  }}
+			{% endautoescape %}
+			</p>
+			<p><a class="btn btn-default" href="{% url 'detail_post' post.id %}">more</button></a>
 			<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
 			<ul class="list-inline">
 				<li><a href="#">Yesterday</a></li>
@@ -34,27 +38,24 @@
 	</div>
 	{% endfor %}
 	<div class="col-md-offset-0">
-		<div id="page"  >
-			<script type="text/javascript">
-			var totalpages={{pageinfo.paginator.num_pages}};
-			var currentPage={{pageinfo.number}};
-				$(function(){
-					var options={
-						bootstrapMajorVersion:1,    //版本
-						currentPage:currentPage,    //当前页数
-						numberOfPages:5,    //最多显示Page页
-						totalPages:totalpages,    //所有数据可以显示的页数
-						pageUrl: function(type, page, current){
-							if (page==current) {
-								return "javascript:void(0)";
-							} else {
-								return "{% url 'list_post' %}" + "?page=" + page;
-							}
-						}
-					}
-					$("#page").bootstrapPaginator(options);
-				})
-			</script>
-		</div>	
+      
+		<div id="page" class="pagination">
+		{% for _ in pageinfo.paginator.num_pages|get_range %}
+
+			{% with start=pageinfo.number|add:-5 %}
+			{% with end=pageinfo.number|add:5 %}
+			{% if forloop.counter == pageinfo.number %}
+				<li class="active"><a href="javascript:void(0)" title="Current page is 1">{{forloop.counter}}</a></li>	
+			{% elif forloop.counter > end or forloop.counter < start %}
+			{% elif forloop.last == pageinfo.paginator.num_pages %}
+			   	<li><a href="{% url 'list_post' forloop.counter category_id %}" title="Go to last page">末页</a></li>
+			{% else %}
+			   	<li><a href="{% url 'list_post' forloop.counter category_id %}" title="Go to page 2">{{ forloop.counter }}</a></li>
+			{% endif%}
+
+			{% endwith %}
+			{% endwith %}
+		{% endfor %}
+		</div>
 	</div>
 {% endblock center_content %}

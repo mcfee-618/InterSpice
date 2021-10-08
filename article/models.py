@@ -1,7 +1,7 @@
 from ckeditor_uploader import fields
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.shortcuts import reverse
 
 class Category(models.Model):
     name = models.CharField(unique=True, max_length=30, blank=True, null=True)
@@ -11,6 +11,9 @@ class Category(models.Model):
         
     def __str__(self) -> str:
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("list_post")
          
 
 

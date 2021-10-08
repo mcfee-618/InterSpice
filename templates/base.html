@@ -36,15 +36,19 @@
     </script>
     <style>
     .bg1 {
-          background-image: url({% static 'background/sky1.jpg' %});
+          background-image: url({% static background_image %});
           -moz-background-size:100% 100%; 
           background-size:100% 100%;
+          min-height:400px;
      }
      .fc-col-header-cell-cushion {
          color:black;
      }
      .fc-daygrid-day-number{
          color:black;
+     }
+     .bottom{
+         margin-top:50px;
      }
     </style>
 
@@ -74,7 +78,10 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li>
+                        <a class="glyphicon glyphicon-user"></a>
+                    </li>
+                    <li>
                         <a href="#">Home</a>
                     </li>
                     <li>
@@ -125,7 +132,7 @@
     </div>
 </div>
 
-<footer class="navbar-static-bottom">       
+<footer class="navbar-static-bottom bottom">       
     <div class="small-print">
         <div class="container">
             <p><span>热爱生活 享受生活<span> | <span>勇敢坚强<span> | <span>责任担当<span></p>
