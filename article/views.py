@@ -15,7 +15,7 @@ class PostListView(BaseView):
             posts = posts.all()
         posts = posts.order_by('-timestamp')
         categories = Category.objects.all()
-        paginator = Paginator(posts, 10)
+        paginator = Paginator(posts, 5)
         pageinfo = paginator.page(page)
         context = {"pageinfo": pageinfo, "categories": categories, "category_id": category_id}
         return self.render(request, "article/list_post.html", context=context)

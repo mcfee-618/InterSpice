@@ -1,12 +1,15 @@
 import os.path
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from article.models import Post
 
 
 class BaseView(View):
 
-    DEFAULT_BACKGROUND_IMAGE = "default.jpg"
+    DEFAULT_BACKGROUND_IMAGE = "love.jpg"
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -35,5 +38,31 @@ class BaseView(View):
 
 class IndexView(BaseView):
     def get(self, request, *args, **kwargs):
-        self.set_background_image("default.jpg")
-        return self.render(request, 'index.html')
+        self.set_background_image("love.jpg")  
+        posts = Post.objects
+        if not request.user.is_authenticated:
+            posts = posts.filter(is_private=0)
+        posts = posts.order_by('-timestamp')[:3]
+        context = {
+            "posts": posts
+        }
+        return self.render(request, 'index.html', context=context)
+    
+class LoginView(BaseView):
+    def post(self, request, *args, **kwargs):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('index'))
+        # Redirect to a success page.
+        # Return an 'invalid login' error message.
+        return redirect(reverse('index'))
+
+class LogoutView(BaseView):
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            logout(request)
+        return redirect(reverse('index'))

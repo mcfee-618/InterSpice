@@ -13,7 +13,7 @@ class Category(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("list_post")
+        return reverse("list_post",)
          
 
 
@@ -22,7 +22,7 @@ class Post(models.Model):
     body = RichTextUploadingField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True)
     can_comment = models.IntegerField(blank=True, null=True)
-    category = models.ForeignKey(Category, models.DO_NOTHING, blank=True, null=True)
+    category = models.ForeignKey(Category, models.DO_NOTHING, blank=True, null=True, related_name="posts")
     is_private = models.IntegerField(blank=True, null=True)
     
     class Meta:
