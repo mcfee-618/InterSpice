@@ -4,7 +4,7 @@ from django.views import View
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from article.models import Post
+from article.models import Post, Link
 
 
 class BaseView(View):
@@ -38,14 +38,19 @@ class BaseView(View):
 
 class IndexView(BaseView):
     def get(self, request, *args, **kwargs):
+        alert_msg = request.session.pop("alert_msg", None)    
         self.set_background_image("love.jpg")  
         posts = Post.objects
         if not request.user.is_authenticated:
             posts = posts.filter(is_private=0)
         posts = posts.order_by('-timestamp')[:3]
+        links = Link.objects.all()
         context = {
-            "posts": posts
+            "posts": posts,
+            "links": links
         }
+        if alert_msg:
+            context.update({"alert_msg": alert_msg})
         return self.render(request, 'index.html', context=context)
     
 class LoginView(BaseView):
@@ -55,6 +60,7 @@ class LoginView(BaseView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            request.session['alert_msg'] = f"welcome {user.username} success login"
             return redirect(reverse('index'))
         # Redirect to a success page.
         # Return an 'invalid login' error message.
@@ -65,4 +71,5 @@ class LogoutView(BaseView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             logout(request)
+        request.session['alert_msg'] = "success logout"
         return redirect(reverse('index'))

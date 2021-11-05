@@ -48,6 +48,14 @@ class Comment(models.Model):
     
     def __str__(self) -> str:
         return self.body
+    
+
+class Link(models.Model):
+    
+    name = models.CharField(max_length=30, blank=True, null=True)
+    url  = models.CharField(max_length=255, blank=True, null=True)
+    class Meta:
+        managed = False
 
  
         

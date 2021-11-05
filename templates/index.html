@@ -4,14 +4,12 @@
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> Completely Synergize</h1>
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> Links</h1>
 				</div>
 				<div class="list-group">
-					<a href="#" class="list-group-item">Resource Taxing</a>
-					<a href="#" class="list-group-item">Premier Niche Markets</a>
-					<a href="#" class="list-group-item">Dynamically Innovate</a>
-					<a href="#" class="list-group-item">Objectively Innovate</a>
-					<a href="#" class="list-group-item">Proactively Envisioned</a>
+				    {% for link in links%}
+					<a href="{{link.url}}" class="list-group-item">{{link.name}}</a>
+					{% endfor%}
 				</div>
 			</div>
 
@@ -49,10 +47,12 @@
   
 {% block center_content %}
 			<!-- Alert -->
+			{% if alert_msg %}
 			<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>Synergize:</strong> Seamlessly visualize quality intellectual capital!
-			</div>		
+				<strong></strong> {{alert_msg}}
+			</div>
+			{% endif %}		
 	        {% for post in posts %}	
 			<!-- Articles -->
 			<div class="row">
@@ -64,7 +64,7 @@
 						{% endautoescape %}
 					</p>
 					<p><button class="btn btn-default">Read More</button></p>
-					<p class="pull-right"><span class="label label-default">{{post.category.name}}</span></p>
+					<p class="pull-right"><span class="label label-default"></span></p>
 					<ul class="list-inline">
 						<li><a href="#">{{post.timestamp|date:"Y-m-d"}}</a></li>
 						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 Comments</a></li>
