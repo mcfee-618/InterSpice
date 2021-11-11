@@ -4,42 +4,12 @@
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> Links</h1>
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> 技术链接</h1>
 				</div>
 				<div class="list-group">
 				    {% for link in links%}
 					<a href="{{link.url}}" class="list-group-item">{{link.name}}</a>
 					{% endfor%}
-				</div>
-			</div>
-
-			<!-- Text Panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Dramatically Engage</h1>
-				</div>
-
-				<div class="panel-body">
-					<p>Objectively innovate empowered manufactured products whereas parallel platforms. Holisticly predominate extensible testing procedures for reliable supply chains. Dramatically engage top-line web services vis-a-vis cutting-edge deliverables.</p>
-					<p><button class="btn btn-default">Engage</button></p>
-				</div>
-			</div>
-
-			<!-- Text Panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<span class="glyphicon glyphicon-bullhorn"></span> 
-						Active Predomination
-					</h3>
-				</div>
-				<div class="panel-body">
-					<p>Proactively envisioned multimedia based expertise and cross-media growth strategies.</p>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default">Resource</button>
-						<button type="button" class="btn btn-default">Envision</button>
-						<button type="button" class="btn btn-default">Niche</button>
-					</div>
 				</div>
 			</div>	
 				
@@ -63,7 +33,7 @@
 			  			{{ post.body |striptags | truncatechars:100  }}
 						{% endautoescape %}
 					</p>
-					<p><button class="btn btn-default">Read More</button></p>
+					<p><a class="btn btn-default" href="{% url 'article:detail_post' post.id %}">Read More</a></p>
 					<p class="pull-right"><span class="label label-default"></span></p>
 					<ul class="list-inline">
 						<li><a href="#">{{post.timestamp|date:"Y-m-d"}}</a></li>

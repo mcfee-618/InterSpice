@@ -89,10 +89,10 @@
                         <a href="{% url 'index' %}">Home</a>
                     </li>
                     <li>
-                        <a href="#">About Me</a>
+                        <a href="{% url 'about' %}">About Me</a>
                     </li>
                     <li>
-                        <a href="#">Posts</a>
+                        <a href="{% url 'article:list_post' 1 0 %}">Posts</a>
                     </li>
                     <li>
                         <a href="#">Books</a>

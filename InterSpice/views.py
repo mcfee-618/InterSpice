@@ -16,14 +16,18 @@ class BaseView(View):
         self.__background_image = None
 
     def set_background_image(self, image_name: str):
+        if image_name == "":
+            self.__background_image = ""
+            return
         image_path = os.path.join(settings.STATIC_URL, "background", image_name)
+        print(image_path)
         if os.path.isfile(image_path):
             self.__background_image = f"background/{image_name}"
         else:
             self.__background_image = f"background/{self.DEFAULT_BACKGROUND_IMAGE}"
 
     def render(self, request, template_name, context=None, content_type=None, status=None, using=None):
-        if not self.__background_image:
+        if self.__background_image is None:
             self.__background_image = f"background/{self.DEFAULT_BACKGROUND_IMAGE}"
         if not context:
             context = {}
@@ -44,7 +48,7 @@ class IndexView(BaseView):
         if not request.user.is_authenticated:
             posts = posts.filter(is_private=0)
         posts = posts.order_by('-timestamp')[:3]
-        links = Link.objects.all()
+        links = Link.objects.filter(type=1).all()
         context = {
             "posts": posts,
             "links": links
@@ -65,6 +69,16 @@ class LoginView(BaseView):
         # Redirect to a success page.
         # Return an 'invalid login' error message.
         return redirect(reverse('index'))
+    
+class AboutView(BaseView):
+    
+    def get(self, request, *args, **kwargs):
+        links = Link.objects.filter(type=1).all()
+        context = {
+            "links": links
+        }
+        self.set_background_image("")
+        return self.render(request, 'about.html', context=context)
 
 class LogoutView(BaseView):
     

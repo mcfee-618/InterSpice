@@ -27,6 +27,7 @@ urlpatterns = [
     path('album/', include('album.urls')),
     path('article/', include('article.urls')),
     path('', views.IndexView.as_view(), name='index'),
+    path('about/', views.AboutView.as_view(), name='about'),
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

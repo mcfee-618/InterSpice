@@ -124,11 +124,93 @@ CKEDITOR_UPLOAD_PATH = ""
 
 CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 
-CKEDITOR_CONFIGS = {	# 添加个性化的配置
-    'default': {
-        'image_previewText':' ',	# 替换图片显示区域那一串搞不懂的字符串
-        'tabSpaces': 4,
-    }
+CUSTOM_TOOLBAR = [
+    {
+        "name": "document",
+        "items": [
+            "Styles",
+            "Format",
+            "Bold",
+            "Italic",
+            "Underline",
+            "Strike",
+            "-",
+            "TextColor",
+            "BGColor",
+            "-",
+            "JustifyLeft",
+            "JustifyCenter",
+            "JustifyRight",
+            "JustifyBlock",
+        ],
+    },
+    {
+        "name": "widgets",
+        "items": [
+            "Undo",
+            "Redo",
+            "-",
+            "NumberedList",
+            "BulletedList",
+            "-",
+            "Outdent",
+            "Indent",
+            "-",
+            "Link",
+            "Unlink",
+            "-",
+            "Image",
+            "CodeSnippet",
+            "Table",
+            "HorizontalRule",
+            "Smiley",
+            "SpecialChar",
+            "-",
+            "Blockquote",
+            "-",
+            "ShowBlocks",
+            "Maximize",
+        ],
+    },
+]
+
+CKEDITOR_CONFIGS = {
+    "default":  {
+    "skin": "moono-lisa",
+    "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
+    "toolbar_Full": [
+        [
+            "Styles",
+            "Format",
+            "Bold",
+            "Italic",
+            "Underline",
+            "Strike",
+            "SpellChecker",
+            "Undo",
+            "Redo",
+        ],
+        ["Link", "Unlink", "Anchor"],
+        ["Image", "Flash", "Table", "HorizontalRule"],
+        ["TextColor", "BGColor"],
+        ["Smiley", "SpecialChar"],
+        ["Source"],
+    ],
+    "toolbar": "Full",
+    "height": 291,
+    "width": 835,
+    "filebrowserWindowWidth": 940,
+    "filebrowserWindowHeight": 725,
+},
+    "my-custom-toolbar": {
+        "skin": "moono-lisa",
+        "toolbar": CUSTOM_TOOLBAR,
+        "toolbarGroups": None,
+        "extraPlugins": ",".join(["image2", "codesnippet"]),
+        "removePlugins": ",".join(["image"]),
+        "codeSnippet_theme": "xcode",
+    },
 }
+
 
 CKEDITOR_RESTRICT_BY_DATE = False

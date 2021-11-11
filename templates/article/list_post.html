@@ -9,7 +9,7 @@
 		<ul class="list-group">
 		{% for category in categories %}
 		 <li class="list-group-item">
-		  <span><a href="{% url 'list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
+		  <span><a href="{% url 'article:list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
 		  <span class="badge badge-primary badge-pill"> {{ category.posts.all|length}}</span>
 		 </li>
 		{% endfor%}
@@ -29,7 +29,7 @@
 			  	{{ post.body |striptags | truncatechars:100  }}
 			{% endautoescape %}
 			</p>
-			<p><a class="btn btn-default" href="{% url 'detail_post' post.id %}">more</button></a>
+			<p><a class="btn btn-default" href="{% url 'article:detail_post' post.id %}">more</button></a>
 			<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
 			<ul class="list-inline">
 				<li><a href="#">Yesterday</a></li>
@@ -49,9 +49,9 @@
 				<li class="active"><a href="javascript:void(0)" title="Current page is 1">{{forloop.counter}}</a></li>	
 			{% elif forloop.counter > end or forloop.counter < start %}
 			{% elif forloop.last == pageinfo.paginator.num_pages %}
-			   	<li><a href="{% url 'list_post' forloop.counter category_id %}" title="Go to last page">末页</a></li>
+			   	<li><a href="{% url 'article:list_post' forloop.counter category_id %}" title="Go to last page">末页</a></li>
 			{% else %}
-			   	<li><a href="{% url 'list_post' forloop.counter category_id %}" title="Go to page 2">{{ forloop.counter }}</a></li>
+			   	<li><a href="{% url 'article:list_post' forloop.counter category_id %}" title="Go to page 2">{{ forloop.counter }}</a></li>
 			{% endif%}
 
 			{% endwith %}

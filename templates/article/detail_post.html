@@ -10,7 +10,7 @@
 		<ul class="list-group">
 		{% for category in categories %}
 		 <li class="list-group-item">
-		  <span><a href="{% url 'list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
+		  <span><a href="{% url 'article:list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
 		  <span class="badge badge-primary badge-pill"> {{ category.posts.all|length}}</span>
 		 </li>
 		{% endfor%}
