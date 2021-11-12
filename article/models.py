@@ -17,6 +17,9 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("list_post", )
+    
+    def get_private_posts(self):
+        return self.posts.filter(is_private=0)
 
 
 class Post(models.Model):

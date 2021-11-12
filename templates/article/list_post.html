@@ -10,7 +10,13 @@
 		{% for category in categories %}
 		 <li class="list-group-item">
 		  <span><a href="{% url 'article:list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
-		  <span class="badge badge-primary badge-pill"> {{ category.posts.all|length}}</span>
+		  <span class="badge badge-primary badge-pill"> 
+		  {% if request.user.is_authenticated %}
+		  {{ category.posts|length}}
+		  {% else%}
+		  {{ category.get_private_posts|length}}
+		  {% endif%}
+		  </span>
 		 </li>
 		{% endfor%}
 		</ul>
@@ -32,9 +38,8 @@
 			<p><a class="btn btn-default" href="{% url 'article:detail_post' post.id %}">more</button></a>
 			<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
 			<ul class="list-inline">
-				<li><a href="#">Yesterday</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 21 Comments</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-share"></span> 36 Shares</a></li>
+				<li><a href="#">{{ post.timestamp | date:"Y年m月d日"}}</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-comment"></span> {{ post.comment_set.all|length }} Comments</a></li>
 		</article>
 	</div>
 	{% endfor %}
