@@ -14,7 +14,7 @@ def get_filename(filename, request):
     random_str = str(uuid.uuid4()).replace('_', "").replace('-', '')[:16]
     filename = f"{year}/{datetime_str}-{random_str}.{file_format}"
     referrer = request.META.get('HTTP_REFERER')
-    models = {"post"}
+    models = {"post", "userprofile"}
     for model in models:
         if model in referrer:
             return f"{model}/{filename}"

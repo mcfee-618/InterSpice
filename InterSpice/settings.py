@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import logging
+import logging.config
+import logging.handlers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
     'django.contrib.messages', 'django.contrib.staticfiles', 'album.apps.AlbumConfig',
-    'article.apps.ArticleConfig', 'ckeditor', 'ckeditor_uploader', 
+    'article.apps.ArticleConfig', 'ckeditor', 'ckeditor_uploader', 'user.apps.UserConfig'
 ]
 
 MIDDLEWARE = [
@@ -61,6 +64,41 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING_DIR = os.path.join("/var/log/Interspice")
+
+LOGGING  = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'hit': {
+            'format': '%(asctime)s|%(message)s',
+        },
+        'detail': {
+            'format': '%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+        },
+        'simple': {
+            'format': '%(asctime)s | %(message)s'
+        },
+    },
+    'filters': {
+    },
+    'handlers': {
+        'default': {
+            '()': logging.handlers.RotatingFileHandler,
+            'filename': os.path.join(LOGGING_DIR, 'app.log'),
+            'formatter': 'detail',
+            'maxBytes': 1024 * 1024 * 50,
+            'backupCount': 5,
+            'encoding':"utf-8",
+        },
+    },
+    'loggers': {
+        "default": {
+            'handlers': ['default']
+        }
+    },
+}
 
 WSGI_APPLICATION = 'InterSpice.wsgi.application'
 
@@ -214,3 +252,5 @@ CKEDITOR_CONFIGS = {
 
 
 CKEDITOR_RESTRICT_BY_DATE = False
+
+logger = logging.getLogger("default")

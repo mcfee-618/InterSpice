@@ -5,7 +5,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from article.models import Post, Link
-
+from user.models import UserProfile
+from .settings import logger
 
 class BaseView(View):
 
@@ -62,7 +63,7 @@ class LoginView(BaseView):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             login(request, user)
             request.session['alert_msg'] = f"welcome {user.username} success login"
             return redirect(reverse('index'))
@@ -74,8 +75,10 @@ class AboutView(BaseView):
     
     def get(self, request, *args, **kwargs):
         links = Link.objects.filter(type=1).all()
+        profile = UserProfile.objects.all()[0]
         context = {
-            "links": links
+            "links": links,
+            "profile": profile
         }
         self.set_background_image("")
         return self.render(request, 'about.html', context=context)
