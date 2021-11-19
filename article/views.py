@@ -10,6 +10,7 @@ from InterSpice.tags import get_range
 
 class PostListView(BaseView):
     def get(self, request, page=1, category_id=0, *args, **kwargs):
+        keyword = request.GET.get("keyword")
         posts = Post.objects
         categories = Category.objects.all()
         if not request.user.is_authenticated:
@@ -18,10 +19,14 @@ class PostListView(BaseView):
             posts = posts.filter(category_id=category_id)
         else:
             posts = posts.all()
+        if keyword:
+            posts = posts.filter(body__contains=keyword)
         posts = posts.order_by('-timestamp')
         paginator = Paginator(posts, 5)
         pageinfo = paginator.page(page)
         context = {"pageinfo": pageinfo, "categories": categories, "category_id": category_id}
+        if keyword:
+            context.update({"keyword": keyword})
         return self.render(request, "article/list_post.html", context=context)
 
 

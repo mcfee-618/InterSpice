@@ -9,7 +9,7 @@
 		<ul class="list-group">
 		{% for category in categories %}
 		 <li class="list-group-item">
-		  <span><a href="{% url 'article:list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
+		  <span><a href="{% url 'article:list_post' 1 category.id   %}?keyword={{keyword}}" class="inline-block">{{ category.name }}</a></span>
 		  <span class="badge badge-primary badge-pill"> 
 		  {% if request.user.is_authenticated %}
 		  {{ category.posts.all|length}}
@@ -54,9 +54,9 @@
 				<li class="active"><a href="javascript:void(0)" title="Current page is 1">{{forloop.counter}}</a></li>	
 			{% elif forloop.counter > end or forloop.counter < start %}
 			{% elif forloop.last == pageinfo.paginator.num_pages %}
-			   	<li><a href="{% url 'article:list_post' forloop.counter category_id %}" title="Go to last page">末页</a></li>
+			   	<li><a href="{% url 'article:list_post' forloop.counter category_id %}?keyword={{keyword}}" title="Go to last page">末页</a></li>
 			{% else %}
-			   	<li><a href="{% url 'article:list_post' forloop.counter category_id %}" title="Go to page 2">{{ forloop.counter }}</a></li>
+			   	<li><a href="{% url 'article:list_post' forloop.counter category_id %}?keyword={{keyword}}" title="Go to page 2">{{ forloop.counter }}</a></li>
 			{% endif%}
 
 			{% endwith %}
