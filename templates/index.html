@@ -37,7 +37,7 @@
 					<p class="pull-right"><span class="label label-default"></span></p>
 					<ul class="list-inline">
 						<li><a href="#">{{post.timestamp|date:"Y-m-d"}}</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 Comments</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> {{post.comment_set.all|length}} Comments</a></li>
 						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 Shares</a></li>
 					</ul>
 				</article>
