@@ -21,18 +21,17 @@ class BaseView(View):
             self.__background_image = ""
             return
         image_path = os.path.join(settings.STATIC_URL, "background", image_name)
-        print(image_path)
         if os.path.isfile(image_path):
             self.__background_image = f"background/{image_name}"
         else:
             self.__background_image = f"background/{self.DEFAULT_BACKGROUND_IMAGE}"
 
     def render(self, request, template_name, context=None, content_type=None, status=None, using=None):
-        if self.__background_image is None:
-            self.__background_image = f"background/{self.DEFAULT_BACKGROUND_IMAGE}"
+        #if self.__background_image is None:
+        #    self.__background_image = f"background/{self.DEFAULT_BACKGROUND_IMAGE}"
         if not context:
             context = {}
-        context.update({"background_image": self.__background_image})
+        #context.update({"background_image": self.__background_image})
         return render(request=request,
                       template_name=template_name,
                       context=context,
@@ -90,3 +89,6 @@ class LogoutView(BaseView):
             logout(request)
         request.session['alert_msg'] = "success logout"
         return redirect(reverse('index'))
+    
+def page_not_found(request, exception):
+    return render(request, '404.html', status=404)

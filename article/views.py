@@ -1,4 +1,6 @@
+import markdown
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
@@ -20,7 +22,7 @@ class PostListView(BaseView):
         else:
             posts = posts.all()
         if keyword:
-            posts = posts.filter(body__contains=keyword)
+            posts = posts.filter(Q(body__contains=keyword) | Q(title__contains=keyword))
         posts = posts.order_by('-timestamp')
         paginator = Paginator(posts, 5)
         pageinfo = paginator.page(page)
@@ -33,6 +35,13 @@ class PostListView(BaseView):
 class PostDetailView(BaseView):
     def get(self, request, post_id, *args, **kwargs):
         post = get_object_or_404(Post, pk=post_id)
+        post.body = markdown.markdown(post.body,
+                                extensions=[
+                                    'markdown.extensions.extra',
+                                    'markdown.extensions.codehilite',
+                                    'markdown.extensions.toc',
+                                ])
+        
         categories = Category.objects.all()
         comments = post.comment_set.all()
         context = {"post": post, "categories": categories, "comments": comments}

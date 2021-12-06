@@ -25,26 +25,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*c(vqpu7+v=fug7$r*m3i5(-1vbecvil_0i0h=)8u+(0=%25&='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'album.apps.AlbumConfig',
-    'article.apps.ArticleConfig', 'ckeditor', 'ckeditor_uploader', 'user.apps.UserConfig'
+    'django.contrib.messages', 'django.contrib.staticfiles', 'album.apps.AlbumConfig', 'article.apps.ArticleConfig',
+    'ckeditor', 'ckeditor_uploader', 'user.apps.UserConfig'
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware', 'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware', 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', 'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', 'InterSpice.middleware.LogMiddleware',
+    'InterSpice.middleware.RateLimitMiddleware'
 ]
 
 ROOT_URLCONF = 'InterSpice.urls'
@@ -67,7 +65,7 @@ TEMPLATES = [
 
 LOGGING_DIR = os.path.join("/var/log/Interspice")
 
-LOGGING  = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -81,8 +79,7 @@ LOGGING  = {
             'format': '%(asctime)s | %(message)s'
         },
     },
-    'filters': {
-    },
+    'filters': {},
     'handlers': {
         'default': {
             '()': logging.handlers.RotatingFileHandler,
@@ -90,12 +87,14 @@ LOGGING  = {
             'formatter': 'detail',
             'maxBytes': 1024 * 1024 * 50,
             'backupCount': 5,
-            'encoding':"utf-8",
+            'level': 'INFO',
+            'encoding': "utf-8",
         },
     },
     'loggers': {
         "default": {
-            'handlers': ['default']
+            'handlers': ['default'],
+            'level': 'INFO',
         }
     },
 }
@@ -114,6 +113,12 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root'
     }
+}
+
+REDIS_CONFIG = {
+    "host": 'localhost',
+    "port": 6379, 
+    "decode_responses": True
 }
 
 # Password validation
@@ -164,7 +169,8 @@ CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 
 CUSTOM_TOOLBAR = [
     {
-        "name": "document",
+        "name":
+        "document",
         "items": [
             "Styles",
             "Format",
@@ -183,7 +189,8 @@ CUSTOM_TOOLBAR = [
         ],
     },
     {
-        "name": "widgets",
+        "name":
+        "widgets",
         "items": [
             "Undo",
             "Redo",
@@ -213,33 +220,39 @@ CUSTOM_TOOLBAR = [
 ]
 
 CKEDITOR_CONFIGS = {
-    "default":  {
-    "skin": "moono-lisa",
-    "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
-    "toolbar_Full": [
-        [
-            "Styles",
-            "Format",
-            "Bold",
-            "Italic",
-            "Underline",
-            "Strike",
-            "SpellChecker",
-            "Undo",
-            "Redo",
+    "default": {
+        "skin":
+        "moono-lisa",
+        "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
+        "toolbar_Full": [
+            [
+                "Styles",
+                "Format",
+                "Bold",
+                "Italic",
+                "Underline",
+                "Strike",
+                "SpellChecker",
+                "Undo",
+                "Redo",
+            ],
+            ["Link", "Unlink", "Anchor"],
+            ["Image", "Flash", "Table", "HorizontalRule"],
+            ["TextColor", "BGColor"],
+            ["Smiley", "SpecialChar"],
+            ["Source"],
         ],
-        ["Link", "Unlink", "Anchor"],
-        ["Image", "Flash", "Table", "HorizontalRule"],
-        ["TextColor", "BGColor"],
-        ["Smiley", "SpecialChar"],
-        ["Source"],
-    ],
-    "toolbar": "Full",
-    "height": 291,
-    "width": 835,
-    "filebrowserWindowWidth": 940,
-    "filebrowserWindowHeight": 725,
-},
+        "toolbar":
+        "Full",
+        "height":
+        291,
+        "width":
+        835,
+        "filebrowserWindowWidth":
+        940,
+        "filebrowserWindowHeight":
+        725,
+    },
     "my-custom-toolbar": {
         "skin": "moono-lisa",
         "toolbar": CUSTOM_TOOLBAR,
@@ -250,7 +263,7 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-
 CKEDITOR_RESTRICT_BY_DATE = False
 
 logger = logging.getLogger("default")
+

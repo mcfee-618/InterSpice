@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django.conf.urls import static, url
+from django.conf.urls import handler404, static, url
 from django.conf import settings
 from . import views
 
@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
-urlpatterns += static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+urlpatterns += static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+handler404 = views.page_not_found

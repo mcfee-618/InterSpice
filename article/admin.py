@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django import forms
 from ckeditor.widgets import CKEditorWidget
-from .models import Comment, Post, Category
+from .models import Comment, Post, Category, Link
 
 admin.site.register(Category)
 admin.site.register(Comment)
+admin.site.register(Link)
 
 
 class PostAdmin(admin.ModelAdmin):
