@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block left_content %}
+			<!-- List-Group Panel -->
+    <div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title"> Categories</h1>
+		</div>
+		<ul class="list-group">
+		{% for book_category in book_categories %}
+		 <li class="list-group-item">
+		  <span><a href="{% url 'book:list_book' 1 book_category.id %}" class="inline-block">{{ book_category.name }}</a></span>
+		  <span class="badge badge-primary badge-pill"> 
+		  {{ book_category.all|length}}
+		  </span>
+		 </li>
+		{% endfor%}
+		</ul>
+	</div>
+{% endblock left_content %}
+
+{% block center_content %}
+  
+<ul class="list-unstyled">
+                        
+                            <li class="media mb-3">
+                                <center><img class="mr-3" src="https://i.loli.net/2019/06/25/5d1204cca86bc85539.jpg" width="200px" alt="Mastering Django"></center>
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1"><a href="/book/206">Mastering Django : Core: The Complete Guide to Django 1.8 LTS</a></h5>
+                                    <p class="text-muted">Nigel George</p>
+                                    <p class="text-muted">
+                                        <a class="text-danger" href="/book/206">详情</a>
+                                    </p>
+                                    <p>
+
+                                        <span class="badge badge-warning">豆瓣评分: 8.5分</span>
+                                        
+                                        <span class="badge badge-danger">发布时间: 2019年6月16日 11:57</span>
+                                    </p>
+                                    <p class="text-muted"></p>
+
+                                </div>
+                            </li>
+
+                        
+                            <li class="media mb-3">
+                                <center><img class="mr-3" src="https://i.loli.net/2019/06/25/5d119ec70743535798.jpg" width="200px" alt="Python测试驱动开发"></center>
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1"><a href="/book/102">Python测试驱动开发 : 使用Django、Selenium和JavaScript进行Web编程（第2版）</a></h5>
+                                    <p class="text-muted">[英] 哈利 • J.W. 帕西瓦尔</p>
+                                    <p class="text-muted">本书从最基础的知识开始，讲解 Web 开发的整个流程，展示如何使用 Python 做测试驱动开发。本书由三个部分组成。第一部分介绍了测试驱动开发和 Django 的基础知识，并在每个阶段进行严格的单元测试。第二部分讨论了 Web 开发要素，探讨了 Web 开发过程中不可避免的问题，以及如何通过...
+                                        <a class="text-danger" href="/book/102">详情</a>
+                                    </p>
+                                    <p>
+
+                                        <span class="badge badge-warning">豆瓣评分: 0.0分</span>
+                                        
+                                        <span class="badge badge-danger">发布时间: 2019年6月15日 18:28</span>
+                                    </p>
+                                    <p class="text-muted"></p>
+
+                                </div>
+                            </li>
+
+                        
+                    </ul>
+
+	<div class="col-md-offset-0">
+      
+		<div id="page" class="pagination">
+		</div>
+	</div>
+{% endblock center_content %}

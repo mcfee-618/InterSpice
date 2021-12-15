@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block left_content %}
+			<!-- List-Group Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> 技术链接</h1>
+				</div>
+				<div class="list-group">
+				    {% for link in links%}
+					<a href="{{link.url}}" class="list-group-item">{{link.name}}</a>
+					{% endfor%}
+				</div>
+			</div>	
+				
+{% endblock left_content %}
+  
+{% block center_content %}
+			<!-- Alert -->
+			{% if alert_msg %}
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong></strong> {{alert_msg}}
+			</div>
+			{% endif %}		
+	        {% for post in posts %}	
+			<!-- Articles -->
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>{{post.title}}</h2>
+					<p>			
+						{% autoescape off %}
+			  			{{ post.body |striptags | truncatechars:100  }}
+						{% endautoescape %}
+					</p>
+					<p><a class="btn btn-default" href="{% url 'article:detail_post' post.id %}">Read More</a></p>
+					<p class="pull-right"><span class="label label-default"></span></p>
+					<ul class="list-inline">
+						<li><a href="#">{{post.timestamp|date:"Y-m-d"}}</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> {{post.comment_set.all|length}} Comments</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 Shares</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+			{% endfor%}
+{% endblock center_content %}

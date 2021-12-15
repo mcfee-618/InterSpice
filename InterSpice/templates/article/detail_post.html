@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block left_content %}
+			<!-- List-Group Panel -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title"> Categories</h1>
+		</div>
+		<ul class="list-group">
+		{% for category in categories %}
+		 <li class="list-group-item">
+		  <span><a href="{% url 'article:list_post' 1 category.id   %}" class="inline-block">{{ category.name }}</a></span>
+		  <span class="badge badge-primary badge-pill"> {{ category.posts.all|length}}</span>
+		 </li>
+		{% endfor%}
+		</ul>
+	</div>
+{% endblock left_content %}
+
+{% block center_content %}
+  
+	<!-- Articles -->
+	<div class="row">
+		<article class="col-xs-12">
+			<header class="entry-header">
+				<h2 class="entry-title">{{ post.title}}</h2>
+				<div class="entry-meta">
+					<span class="byline"><i class="fa fa-user"></i><span class="author vcard"><a class="url fn n" style="color:black;" href="http://xiaorui.cc/archives/author/rfyiamcool">{{ post.category.name }}</a></span></span> &nbsp; | &nbsp; <span class="posted-on"><i class="fa fa-calendar"></i>
+					<a href="#" rel="bookmark" style="color:black;">
+					<time class="entry-date published" datetime="{{post.timestamp}}">{{ post.timestamp | date:"Y年m月d日"}}</time></a></span>
+					&nbsp; | &nbsp;
+					<span class="comments-link">
+				    	<a href="#" style="color:black;">{{ comments | length}} Comments</a>			
+					</span>
+				</div>
+	        </header>
+			<div class="body">
+				{% autoescape off %}
+			  		{{ post.body }}
+				{% endautoescape %}
+			</div>
+		</article>
+	</div>
+	<h3>Add Comment</h3>
+	<div class="col-md-offset-0">
+	</div>
+
+	 <hr>
+
+	<form action="{% url "article:add_comment" post.id %}" method="post" class="form" >
+	    {% csrf_token %}
+    	<div class="form-group required"><label class="form-control-label" for="author">Name</label>                             
+        	<input class="form-control" id="author" name="author" required type="text" value="">             
+    	</div>
+    	<div class="form-group required"><label class="form-control-label" for="email">Email</label>
+            <input class="form-control" id="email" name="email" required type="text" value="">    
+        </div>
+    	{% comment %} <div class="form-group"><label class="form-control-label" for="site">Site</label>        
+            <input class="form-control" id="site" name="site" type="text" value="">           
+        </div> {% endcomment %}
+    	<div class="form-group required"><label class="form-control-label" for="body">Comment</label>             
+        	<textarea class="form-control" id="body" name="body" required></textarea>
+        </div>
+            <input class="btn btn-secondary" id="submit" name="submit" type="submit" value="Submit">  
+    </form>
+
+	 <div class="comments" id="comments">
+                <h3>{{post.comment_set.all|length}} Comments</h3>
+                    <ul class="list-group">
+                        {% for comment in post.comment_set.all%}
+                            <li class="list-group-item list-group-item-action flex-column">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">
+                                        <a href="/"
+                                           target="_blank">
+                                                {{comment.author}}                                          
+                                        </a>
+                                        
+                                            <span class="badge badge-primary">Author</span>                                
+                                    </h5>
+                                    <small data-toggle="tooltip" data-placement="top" data-delay="500"
+                                           data-timestamp="2020-04-17T16:14:29Z">
+                                        <span class="flask-moment" data-timestamp="2020-04-17T16:14:29Z" data-format="fromNow(0)" data-refresh="0" style="display: none">2020-04-17T16:14:29Z</span>
+                                    </small>
+                                </div>
+                                <p class="mb-1">{{comment.body}}</p>
+                            </li>
+					    {% endfor %}
+					</ul>
+				</div>
+{% endblock center_content %}
